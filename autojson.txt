@@ -1,0 +1,7 @@
+URL1:"http://example.com"
+BASE:"headshot portrait of zwx man in the style of a photoshoot,"
+OUTFIT1:"wearing a suit,"
+OUTFIT2:"wearing a shirt,"
+SCENE1:"standing in a street"
+SCENE2:"standing in a pub"
+NEG1:"cartoon, painting, illustration, poor quality resolution, incoherent, poorly drawn, poorly drawn lines, low quality, messy drawing, bad resolution, deformed, disfigured, disjointed, open hand, open hands, opened hands, opened hand, out of frame"
