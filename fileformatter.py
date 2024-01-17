@@ -9,33 +9,35 @@ def generate_json(input_file_name, output_file_name):
     # Parsing the file content
     urls = []
     base_prompt = ""
-    variables = []
+    outfits = []
+    scenes = []
     negative_prompts = []
 
     for line in file_content:
         if line.startswith('URL'):
-            # Adjusted to correctly parse the entire URL
-            url = line.split(':', 1)[1].strip().strip('"')
-            urls.append(url)
+            urls.append(line.split(':', 1)[1].strip().strip('"'))
         elif line.startswith('BASE'):
             base_prompt = line.split(':', 1)[1].strip().strip('"')
-        elif line.startswith('OUTFIT') or line.startswith('SCENE'):
-            variable = line.split(':', 1)[1].strip().strip('"')
-            variables.append(variable)
+        elif line.startswith('OUTFIT'):
+            outfits.append(line.split(':', 1)[1].strip().strip('"'))
+        elif line.startswith('SCENE'):
+            scenes.append(line.split(':', 1)[1].strip().strip('"'))
         elif line.startswith('NEG'):
-            neg_prompt = line.split(':', 1)[1].strip().strip('"')
-            negative_prompts.append(neg_prompt)
+            negative_prompts.append(line.split(':', 1)[1].strip().strip('"'))
 
-    # Generating all combinations
-    combinations = itertools.product(urls, variables, negative_prompts)
+    # Creating combinations of outfits and scenes
+    variable_combinations = itertools.product(outfits, scenes)
+
+    # Generating all combinations with URLs and negative prompts
+    combinations = itertools.product(urls, variable_combinations, negative_prompts)
 
     # Formatting the combinations into the desired JSON structure
     json_data = []
 
-    for url, variable, neg_prompt in combinations:
+    for url, (outfit, scene), neg_prompt in combinations:
         entry = {
             "openpose_url": url,
-            "template": base_prompt + " " + variable,
+            "template": base_prompt + " " + outfit + ", " + scene,
             "negative_prompt": neg_prompt,
             "count": 1
         }
